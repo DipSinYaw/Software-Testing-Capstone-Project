@@ -3,6 +3,7 @@ import { connectToDb } from '@/app/api/db';
 import { UserSchema } from '@/lib/models/user';
 import { ObjectId } from 'mongodb';
 import bcrypt from 'bcryptjs';
+import { isValidEmail } from '@/lib/validation';
 
 // GET a single user by _id or email from query parameters
 // Example: /api/users/user?id=... OR /api/users/user?email=...
@@ -50,6 +51,12 @@ export async function POST(request: NextRequest) {
         }
 
         const { name, email, password } = validation.data;
+
+        // Although Zod can do this, we use a separate function for unit testing demonstration
+        if (!isValidEmail(email)) {
+            return NextResponse.json({ message: 'Invalid email format provided' }, { status: 400 });
+        }
+
         const { db } = await connectToDb();
 
         const existingUser = await db.collection('users').findOne({ email });
