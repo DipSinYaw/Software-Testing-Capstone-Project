@@ -38,3 +38,9 @@ https://github.com/matthew4np/nextjs-creating-and-hosting-a-full-stack-site/tree
 or
 
 https://solid-happiness-x5r7xwrg6vjxh6p77.github.dev/
+
+
+the git origin from remote below 
+git remote -v
+origin  https://github.com/matthew4np/nextjs-creating-and-hosting-a-full-stack-site.git (fetch)
+origin  https://github.com/matthew4np/nextjs-creating-and-hosting-a-full-stack-site.git (push)
