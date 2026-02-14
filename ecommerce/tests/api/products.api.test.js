@@ -11,7 +11,6 @@ describe("Products API Endpoint (/api/products/[id])", () => {
     expect(response.status).toBe(200);
 
     expect(response.body).toHaveProperty("name", "Hat");
-    // The API returns the ID as a string, so we test for a string.
     expect(response.body).toHaveProperty("id", "1");
     expect(typeof response.body.price).toBe('number');
   });

@@ -11,6 +11,7 @@ const { Builder, By, Key, until } = require("selenium-webdriver");
 (async function loginE2ETest() {
   // Declare driver here so it's accessible in the finally block.
   let driver;
+  let sleeptime = 1000; // 2 seconds sleep time for better visibility of actions
 
   try {
     console.log("Starting login E2E test...");
@@ -36,7 +37,7 @@ const { Builder, By, Key, until } = require("selenium-webdriver");
     // 5. Assert: Wait until the URL changes, indicating a successful login/redirect.
     await driver.wait(until.urlIs("http://localhost:3000/products"), 10000);
     console.log("  - Login successful, redirected to products page.");
-    await driver.sleep(2000); // Pause on products page
+    await driver.sleep(sleeptime); // Pause on products page
 
     // Helper function to create a robust XPath for the 'Add to Cart' button
     const getAddToCartButtonXPath = (productName) => {
@@ -46,26 +47,26 @@ const { Builder, By, Key, until } = require("selenium-webdriver");
     // 6. Add "Hat" to cart. Wait for the button to be ready before clicking.
     console.log("  - Finding 'Add to Cart' for Hat...");
     const hatButton = await driver.wait(until.elementLocated(By.xpath(getAddToCartButtonXPath('Hat'))), 10000);
-    await driver.sleep(2000); // Pause before clicking
+    await driver.sleep(sleeptime); // Pause before clicking
     await hatButton.click();
     console.log("  - Clicked 'Add to Cart' for Hat. Pausing to observe result...");
-    await driver.sleep(2000); // Pause after clicking
+    await driver.sleep(sleeptime); // Pause after clicking
 
     // 7. Add "Shirt" to cart
     console.log("  - Finding 'Add to Cart' for Shirt...");
     const shirtButton = await driver.wait(until.elementLocated(By.xpath(getAddToCartButtonXPath('Shirt'))), 10000);
-    await driver.sleep(2000); // Pause before clicking
+    await driver.sleep(sleeptime); // Pause before clicking
     await shirtButton.click();
     console.log("  - Clicked 'Add to Cart' for Shirt. Pausing to observe result...");
-    await driver.sleep(2000); // Pause after clicking
+    await driver.sleep(sleeptime); // Pause after clicking
 
     // 8. Add "Apron" to cart
     console.log("  - Finding 'Add to Cart' for Apron...");
     const apronButton = await driver.wait(until.elementLocated(By.xpath(getAddToCartButtonXPath('Apron'))), 10000);
-    await driver.sleep(2000); // Pause before clicking
+    await driver.sleep(sleeptime); // Pause before clicking
     await apronButton.click();
     console.log("  - Clicked 'Add to Cart' for Apron. Pausing to observe result...");
-    await driver.sleep(2000); // Pause after clicking
+    await driver.sleep(sleeptime); // Pause after clicking
 
     // 9. Navigate to the cart page by clicking the 'Cart' link in the nav bar
     await driver.wait(until.elementLocated(By.css('a[href="/cart"]')), 10000).click();
@@ -74,7 +75,7 @@ const { Builder, By, Key, until } = require("selenium-webdriver");
     // 10. Assert navigation to the cart page
     await driver.wait(until.urlIs("http://localhost:3000/cart"), 10000);
     console.log("  - Verified navigation to cart page.");
-    await driver.sleep(2000);
+    await driver.sleep(sleeptime);
 
     console.log("\nTEST PASSED: Login and Add to Cart flow completed successfully!");
   } catch (error) {
@@ -84,7 +85,7 @@ const { Builder, By, Key, until } = require("selenium-webdriver");
     if (driver) {
       // For debugging: Pause for 2 seconds before closing the browser.
       console.log("Pausing for 2 seconds before closing...");
-      await driver.sleep(2000);
+      await driver.sleep(sleeptime);
       // 6. Always close the browser session.
       await driver.quit();
       console.log("Browser session closed.");
