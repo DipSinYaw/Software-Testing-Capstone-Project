@@ -22,3 +22,4 @@ describe("Products API Endpoint (/api/products/[id])", () => {
     expect(response.text).toBe("Product not found");
   });
 });
+
