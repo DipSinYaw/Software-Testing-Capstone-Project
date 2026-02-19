@@ -10,6 +10,22 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+    # 1. Create a MongoDB service container inside the runner
+    services:
+      mongodb:
+        image: mongo:6
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: testuser
+          MONGO_INITDB_ROOT_PASSWORD: testpassword
+
+    # 2. Set environment variables for the Next.js app to connect to the service
+    env:
+      MONGODB_USER: testuser
+      MONGODB_PASS: testpassword
+      MONGODB_HOST: localhost:27017
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -26,3 +42,20 @@ jobs:
       - name: Run test suite
         working-directory: ./ecommerce
         run: npm run test:unit
+
+      - name: Build application
+        working-directory: ./ecommerce
+        run: npm run build
+
+      - name: Start application
+        working-directory: ./ecommerce
+        run: |
+          npm start &
+          npx wait-on http://127.0.0.1:3000
+
+      - name: Setup k6
+        uses: grafana/setup-k6-action@v1
+
+      - name: Run load test
+        working-directory: ./ecommerce
+        run: npm run test:perf
