@@ -20,7 +20,9 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
+        working-directory: ./ecommerce
         run: npm install
 
       - name: Run test suite
-        run: npm test
+        working-directory: ./ecommerce
+        run: npm run test:unit
