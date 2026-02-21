@@ -17,13 +17,11 @@ jobs:
         ports:
           - 27017:27017
         env:
-          MONGO_INITDB_ROOT_USERNAME: testuser
-          MONGO_INITDB_ROOT_PASSWORD: testpassword
-
-    # 2. Set environment variables for the Next.js app to connect to the service
+          MONGO_INITDB_ROOT_USERNAME: ${secrets.MONGODB_USER}
+          MONGO_INITDB_ROOT_PASSWORD: ${secrets.MONGODB_PASS}
     env:
-      MONGODB_USER: testuser
-      MONGODB_PASS: testpassword
+      # MONGODB_USER: ${secrets.MONGODB_USER}
+      # MONGODB_PASS: ${secrets.MONGODB_PASS}
       MONGODB_HOST: localhost:27017
 
     steps:
