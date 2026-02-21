@@ -1,7 +1,5 @@
 const request = require("supertest");
 
-// The base URL of the running application.
-// Ensure your dev server is running (`npm run dev`) before executing these tests.
 const BASE_URL = "http://localhost:3000";
 
 describe("Products API Endpoint (/api/products/[id])", () => {

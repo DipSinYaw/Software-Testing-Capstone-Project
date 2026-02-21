@@ -6,16 +6,12 @@ const { Builder, By, Key, until } = require("selenium-webdriver");
  * fill in credentials, and submit the form.
  */
 
-// We use an Immediately Invoked Function Expression (IIFE)
-// to define and execute our async test logic in one step.
 (async function loginE2ETest() {
-  // Declare driver here so it's accessible in the finally block.
   let driver;
-  let sleeptime = 1000; // 2 seconds sleep time for better visibility of actions
+  let sleeptime = 1000; 
 
   try {
     console.log("Starting login E2E test...");
-    // Initialize a new Chrome browser session. This is now inside the try block.
     driver = await new Builder().forBrowser("chrome").build();
 
     // 1. Navigate to the login page.
@@ -39,7 +35,6 @@ const { Builder, By, Key, until } = require("selenium-webdriver");
     console.log("  - Login successful, redirected to products page.");
     await driver.sleep(sleeptime); // Pause on products page
 
-    // Helper function to create a robust XPath for the 'Add to Cart' button
     const getAddToCartButtonXPath = (productName) => {
       return `//div[.//h2[text()='${productName}']]//button[text()='Add to Cart']`;
     };
@@ -81,12 +76,9 @@ const { Builder, By, Key, until } = require("selenium-webdriver");
   } catch (error) {
     console.error("\nTEST FAILED: An error occurred.", error);
   } finally {
-    // Ensure the driver was successfully created before trying to interact with it.
     if (driver) {
-      // For debugging: Pause for 2 seconds before closing the browser.
       console.log("Pausing for 2 seconds before closing...");
       await driver.sleep(sleeptime);
-      // 6. Always close the browser session.
       await driver.quit();
       console.log("Browser session closed.");
     }

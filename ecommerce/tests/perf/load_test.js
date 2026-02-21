@@ -17,14 +17,11 @@ export const options = {
   },
 };
 
-// This is the main function that each virtual user will execute repeatedly.
 export default function () {
-  // Each VU sends a GET request to the all products endpoint.
+
   const res = http.get("http://127.0.0.1:3000/api/products");
 
-  // Check if the request was successful.
   check(res, { "status is 200": (r) => r.status === 200 });
-
 
   sleep(1);
 }
